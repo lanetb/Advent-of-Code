@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 	//"strconv"
-	"slices"
+	//"slices"
 )
 
 func main() {
@@ -17,9 +17,15 @@ func main() {
 
 	scanner := bufio.NewScanner(file)
 	total := 0
+	text := []string{} // Declare the text variable as an empty string slice
+
 	for scanner.Scan() {
+		text = append(text, scanner.Text()) // Append the scanned text to the text slice
+	}
+	for t, _ := range text {
+		// Your code here
 		points := 0
-		Nums := strings.Split(strings.Split(scanner.Text(), ":")[1], "|")
+		Nums := strings.Split(strings.Split(text[t], ":")[1], "|")
 		winningNums := strings.Split(strings.Trim(Nums[0], " "), " ")
 		myNums := strings.Split(strings.Trim(Nums[1], " "), " ")
 		fmt.Print(winningNums)
@@ -30,14 +36,11 @@ func main() {
 		for k := range myNums {
 			if contains(winningNums, myNums[k]) {
 				fmt.Print("FOUND: " + string(myNums[k]) + " | ")
-				if points == 0 {
-					points = 1
-				} else {
-					points *= 2
-				}
+				points = 1
 			}
 		}
 		fmt.Println(points)
+
 		total += points
 		//fmt.Println(winningNums)
 		//fmt.Println(myNums)
